@@ -1,0 +1,4 @@
+{
+  "host": "kafka.brcore01.internal:9092",
+  "topic": "hmheng-uds.int.calculated-behavior-events.schema.calculated.behavior"
+}
