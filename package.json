@@ -1,23 +1,27 @@
 {
-  "name": "kafkaProducerScript",
+  "name": "simpleKafkaProducer",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "bin": {
+    "smple-kafka-producer": "./index.js"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wsihmh/KafkaProducerScript.git"
+    "url": "git+https://github.com/wsihmh/simpleKafkaScript.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/wsihmh/KafkaProducerScript/issues"
+    "url": "https://github.com/wsihmh/simpleKafkaProducer/issues"
   },
-  "homepage": "https://github.com/wsihmh/KafkaProducerScript#readme",
+  "homepage": "https://github.com/wsihmh/simpleProducerScript#readme",
   "dependencies": {
+    "commander": "^2.19.0",
     "kafka-node": "^4.0.1",
     "uuid": "^3.3.2"
   }
