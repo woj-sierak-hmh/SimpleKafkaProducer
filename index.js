@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 
 const fs = require('fs');
+const path = require('path');
 const program = require('commander');
 const { getProducer } = require('./app/producer.js');
 const pjson = require('./package.json');
@@ -27,7 +28,8 @@ process.stdin.on('end', () => {
 });
 
 const startProcess = () => {
-  const configPath = program.config || 'defaults/config.json';
+  const defaultConfigPath = path.join(__dirname, 'defaults/config.json')
+  const configPath = program.config || defaultConfigPath;
   const configFile = fs.readFileSync(configPath, 'utf8');
   const config = JSON.parse(configFile);
 
