@@ -43,8 +43,9 @@ const startProcess = () => {
   console.log('buf:', buf.toString('hex'))
 
   const sendPayload = async (buf) => {
+    let producer;
     try {
-      const producer = await getProducer(host, topic);
+      producer = await getProducer(host, topic);
     } catch (err) {
     console.log('Error connecting to Kafka cluster:', err);
     process.exit(1);
@@ -52,10 +53,11 @@ const startProcess = () => {
 
     try {
       const res = await producer.send(buf);
-      console.log('res--->', res);
+      console.log('Message sent successfully:', res);
     } catch (err) {
       console.log('Error sending message to Kafka', err);
     }
+    process.exit(1);
   }
 
   sendPayload(buf);

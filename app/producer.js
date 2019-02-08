@@ -14,8 +14,8 @@ module.exports.getProducer = (host, topic) => {
       messages: buf,
       key: key || uuid(),
     };
-    hlproducer.send([payload], (err, data) => {
-      return new Promise((resolve, reject) => {
+    return new Promise((resolve, reject) => {
+      hlproducer.send([payload], (err, data) => {
         if (err) return reject(err);
         resolve(data);
       });
