@@ -22,7 +22,7 @@ process.stdin.on('readable', () => {
 });
 
 process.stdin.on('end', () => {
-  console.log('input:', input);
+  // console.log('input:', input);
   startProcess();
 });
 
@@ -34,15 +34,16 @@ const startProcess = () => {
   const host = config.host;
   const topic = config.topic;
   
-  // const msgHex = '000000003d146c6f67696e436f756e744832373065666635622d303635652d343634322d386363622d3037333131326436393932370000';
+  // const input = '000000003d146c6f67696e436f756e744832373065666635622d303635652d343634322d386363622d3037333131326436393932370000';
 
-  const buf = Buffer.from(input, 'hex');
+  const bufList = input.split(',').map(item => Buffer.from(item, 'hex'));
 
   console.log('host:', host)
   console.log('topic:', topic);
-  console.log('buf:', buf.toString('hex'))
+  // console.log('buf:', bufList.map(buf => buf.toString('hex')));
 
-  const sendPayload = async (buf) => {
+
+  const sendPayload = async () => {
     let producer;
     try {
       producer = await getProducer(host, topic);
@@ -51,14 +52,21 @@ const startProcess = () => {
     process.exit(1);
     }
 
-    try {
-      const res = await producer.send(buf);
-      console.log('Message sent successfully:', res);
-    } catch (err) {
-      console.log('Error sending message to Kafka', err);
+    const resList = [];
+    for (i in bufList) {
+      try {
+        const buf = bufList[i];
+        console.log(`[${i}] sending: ${buf.toString('hex')}`);
+        const res = await producer.send(buf);
+        resList.push(res);
+      } catch (err) {
+        console.log('Error sending message to Kafka', err);
+        process.exit(1);
+      }
     }
+    console.log('Messages sent successfully: \n', resList);
     process.exit(1);
   }
 
-  sendPayload(buf);
+  sendPayload();
 }

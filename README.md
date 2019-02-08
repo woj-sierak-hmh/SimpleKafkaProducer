@@ -6,6 +6,11 @@ Sends hex kafka messages provided as stdin to Kafka host and topic defined in th
 
 Install globally:
 ```sh
+$ npm i https://github.com/wsihmh/SimpleKafkaProducer.git -g
+```
+
+Due to temporary issues the script isn't published to HMH Artifactory NPM yet.
+```sh
 $ npm i simple-kafka-producer -g
 ```
 
