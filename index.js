@@ -54,18 +54,29 @@ const startProcess = () => {
     process.exit(1);
     }
 
-    const resList = [];
-    for (i in bufList) {
-      try {
-        const buf = bufList[i];
-        console.log(`[${i}] sending: ${buf.toString('hex')}`);
-        const res = await producer.send(buf);
-        resList.push(res);
-      } catch (err) {
-        console.log('Error sending message to Kafka', err);
-        process.exit(1);
-      }
+    ///////////////////
+    try {
+      const res = await producer.send(bufList);
+      resList = res;
+    } catch (err) {
+      console.log('Error sending message to Kafka', err);
+      process.exit(1);
     }
+
+    ///////////////////
+
+    // const resList = [];
+    // for (i in bufList) {
+    //   try {
+    //     const buf = bufList[i];
+    //     console.log(`[${i}] sending: ${buf.toString('hex')}`);
+    //     const res = await producer.send(buf);
+    //     resList.push(res);
+    //   } catch (err) {
+    //     console.log('Error sending message to Kafka', err);
+    //     process.exit(1);
+    //   }
+    // }
     console.log('Messages sent successfully: \n', resList);
     process.exit(1);
   }

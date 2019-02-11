@@ -8,14 +8,19 @@ module.exports.getProducer = (host, topic) => {
   const hlproducer = new HighLevelProducer(client);
 
   const producer = {};
-  producer.send = (buf, key) => {
-    const payload = {
+  producer.send = (bufs, key) => {
+    // const payloads = bufs.map(buf => ({
+    //   topic,
+    //   messages: [buf],
+    //   key: key || uuid(),
+    // }));
+    const payloads = [{
       topic,
-      messages: buf,
+      messages: Array.isArray(bufs) ? bufs : [bufs],
       key: key || uuid(),
-    };
+    }];
     return new Promise((resolve, reject) => {
-      hlproducer.send([payload], (err, data) => {
+      hlproducer.send(payloads, (err, data) => {
         if (err) return reject(err);
         resolve(data);
       });
